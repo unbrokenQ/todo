@@ -1,6 +1,7 @@
 "use client";
 
 import { TodoTable } from "@/components/general/Todos";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,26 +9,40 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [todos, setTodos] = useState<ITodo[]>(() => {
+  const [todos, setTodos] = useState<ITodo[]>([]);
+
+  useEffect(() => {
     const todosStorage = localStorage.getItem("todos");
 
-    if (!todosStorage) return [];
-
-    return JSON.parse(todosStorage);
-  });
+    if (!todosStorage) {
+      setTodos([]);
+    } else {
+      setTodos(JSON.parse(todosStorage));
+    }
+  }, []);
 
   return (
-    <div className="">
+    <div className="w-3xl">
       <Card>
         <CardHeader>
           <CardTitle>Все листы</CardTitle>
-          <CardDescription>Создавайте и удаляйте листы</CardDescription>
+          <CardDescription className="w-full">
+            Создавайте и удаляйте листы
+          </CardDescription>
+          <Link href="/create" className={buttonVariants({}) + " ml-auto"}>
+            Создать
+          </Link>
         </CardHeader>
-        <CardContent>
-          <TodoTable todos={todos} />
+        <CardContent className="min-h-40 flex justify-center items-center">
+          {todos.length == 0 ? (
+            <p>Вы еще не создавали листа</p>
+          ) : (
+            <TodoTable todos={todos} />
+          )}
         </CardContent>
       </Card>
     </div>
