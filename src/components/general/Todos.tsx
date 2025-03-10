@@ -1,6 +1,15 @@
 import { Button } from "../ui/button";
 
-export function TodoTable({ todos }: { todos: ITodo[] }) {
+type TodoTableProps = {
+  todos: ITodo[];
+  updateTodo: (todos: ITodo[]) => void;
+};
+
+export function TodoTable({ todos, updateTodo }: TodoTableProps) {
+  function deleteTodo(id: number) {
+    const newTodo = todos.filter((todo) => todo.id !== id);
+    updateTodo(newTodo);
+  }
   return (
     <div className="w-full flex flex-col gap-2">
       {todos.map((todo) => (
@@ -8,7 +17,9 @@ export function TodoTable({ todos }: { todos: ITodo[] }) {
           <p className="font-medium">{todo.title}</p>
           <div className="ml-auto flex gap-2">
             <Button variant="outline">Изменить</Button>
-            <Button variant="secondary">Удалить</Button>
+            <Button onClick={() => deleteTodo(todo.id)} variant="secondary">
+              Удалить
+            </Button>
           </div>
         </div>
       ))}

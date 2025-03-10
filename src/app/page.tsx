@@ -25,6 +25,11 @@ export default function Home() {
     }
   }, []);
 
+  function updateTodo(newTodo: ITodo[]) {
+    setTodos(newTodo);
+    localStorage.setItem("todos", JSON.stringify(newTodo));
+  }
+
   return (
     <div className="w-3xl">
       <Card>
@@ -39,9 +44,9 @@ export default function Home() {
         </CardHeader>
         <CardContent className="min-h-40 flex justify-center items-center">
           {todos.length == 0 ? (
-            <p>Вы еще не создавали листа</p>
+            <p>пусто</p>
           ) : (
-            <TodoTable todos={todos} />
+            <TodoTable todos={todos} updateTodo={updateTodo} />
           )}
         </CardContent>
       </Card>
