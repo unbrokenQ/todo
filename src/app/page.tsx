@@ -1,7 +1,7 @@
 "use client";
 
 import { TodoTable } from "@/components/general/Todos";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
